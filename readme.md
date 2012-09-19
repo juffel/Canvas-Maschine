@@ -10,3 +10,4 @@ Zur Anwendungsseite hin sollen folgende Methoden enthalten sein:
 Zur Canvasseite hin:
 - userInput (um z.B. Mausklicks an die Applikation weiterleiten zu können)
 
+Der Maschine soll im Konstruktoraufruf die ID eines Abschnitts im HTML Code übergeben werden, in welchen sie dann selbst einen canvas einfügt und ggf. verändern kann.
