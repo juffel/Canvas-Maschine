@@ -1,0 +1,1 @@
+Diese Maschine soll die Generierung von Bildern auf einem canvas-Objekt aus einer Menge von zeichenbaren Objekten umsetzen. Diese Objekte liegen z.B. in Form einer Liste vor. Die Maschine zeichnet mit einer einstellbaren Framerate von z.B. 60fps dieses Objekte auf den canvas.
