@@ -28,25 +28,36 @@
     Maschine.prototype.userInput = function() {};
 
     Maschine.prototype._redrawCanvas = function() {
-      var o, _i, _len, _results;
+      var context, o, _i, _len, _results;
+      context = getContext();
       _results = [];
       for (_i = 0, _len = objects.length; _i < _len; _i++) {
         o = objects[_i];
-        _results.push(_draw(o));
+        _results.push(_draw(o, context));
       }
       return _results;
     };
 
     Maschine.prototype._drawRectangle = function(rect) {
-      var canvas, context, x1, x2, y1, y2;
-      canvas = document.getElementById(this.canvasName);
-      context = canvas.getContext("2d");
+      var context;
+      context = getContext();
+      return _drawRectangle(rect, context);
+    };
+
+    Maschine.prototype._drawRectangle = function(rect, context) {
+      var x1, x2, y1, y2;
       context.fillStyle = rect.color;
       x1 = rect.posX;
       x2 = rect.posX + rect.dimX;
       y1 = rect.posY;
       y2 = rect.posY + rect.dimY;
       return context.fillRect(x1, y1, x2, y2);
+    };
+
+    Maschine.prototype.getContext = function() {
+      var canvas;
+      canvas = document.getElementById(this.canvasName);
+      return canvas.getContext("2d");
     };
 
     return Maschine;
