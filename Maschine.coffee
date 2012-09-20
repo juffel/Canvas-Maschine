@@ -17,27 +17,32 @@ class Maschine
                        "</canvas>"
 
 
-    registerNewObject: () ->
+    registerNewObject: (gObj) ->
+        objects.splice(objects.length, 0, gObj)
 
+    removeObject: (gObj) ->
+        ind = objects.indexOf(gObj)
+        objects.splice(ind, 1)
 
-    removeObject: () ->
-
-
-    updateObject: () ->
-
+    updateObject: (gObj, new_gObj) ->
+        ind = objects.indexOf(gObj)
+        objects[ind] = new_gObj
 
     userInput: () ->
 
 
     # zeichnet den Canvas komplett neu
     _redrawCanvas: () ->
-        context = getContext()
+        context = @getContext()
+        # clear
+        context.clearRect(0,0, @dimX, @dimY)
+        # redraw
         for o in objects
-            _draw(o, context)
+            @_drawRectangle(o, context)
     
     # zeichnet ein einzelnes Objekt auf den Canvas
     _drawRectangle: (rect) ->
-        context = getContext()
+        context = @getContext()
         _drawRectangle(rect, context)
     _drawRectangle: (rect, context) ->
         context.fillStyle = rect.color

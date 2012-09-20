@@ -18,5 +18,5 @@ class Circle extends GObject
         super(color, posX, posY)
 
 class Vector extends GObject
-    constructor: (color, posX, posY, @dimX, @dimY)
+    constructor: (color, posX, posY, @dimX, @dimY) ->
         super(color, posX, posY)

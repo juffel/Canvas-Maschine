@@ -19,28 +19,39 @@
       sect.innerHTML = "<canvas id=" + this.canvasName + " width=" + this.dimX + " height=" + this.dimY + " style='border:1px solid #000000';>" + "</canvas>";
     }
 
-    Maschine.prototype.registerNewObject = function() {};
+    Maschine.prototype.registerNewObject = function(gObj) {
+      return objects.splice(objects.length, 0, gObj);
+    };
 
-    Maschine.prototype.removeObject = function() {};
+    Maschine.prototype.removeObject = function(gObj) {
+      var ind;
+      ind = objects.indexOf(gObj);
+      return objects.splice(ind, 1);
+    };
 
-    Maschine.prototype.updateObject = function() {};
+    Maschine.prototype.updateObject = function(gObj, new_gObj) {
+      var ind;
+      ind = objects.indexOf(gObj);
+      return objects[ind] = new_gObj;
+    };
 
     Maschine.prototype.userInput = function() {};
 
     Maschine.prototype._redrawCanvas = function() {
       var context, o, _i, _len, _results;
-      context = getContext();
+      context = this.getContext();
+      context.clearRect(0, 0, this.dimX, this.dimY);
       _results = [];
       for (_i = 0, _len = objects.length; _i < _len; _i++) {
         o = objects[_i];
-        _results.push(_draw(o, context));
+        _results.push(this._drawRectangle(o, context));
       }
       return _results;
     };
 
     Maschine.prototype._drawRectangle = function(rect) {
       var context;
-      context = getContext();
+      context = this.getContext();
       return _drawRectangle(rect, context);
     };
 
