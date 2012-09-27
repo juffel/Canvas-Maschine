@@ -4,13 +4,10 @@
 
   Circulator = (function() {
 
-    function Circulator(Maschine) {
-      this.Maschine = Maschine;
+    function Circulator(Method) {
+      this.Method = Method;
+      this.prototype.circulate = Method;
     }
-
-    Circulator.prototype.circulate = function() {
-      return this.Maschine.circulate();
-    };
 
     return Circulator;
 

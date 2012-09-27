@@ -6,9 +6,7 @@
 # Methoden dynamisch zu erstellen, das Objekt macht daher nicht viel Sinn...
 class Circulator
 
-    constructor: (@Maschine) ->
-
-    circulate: ->
-        @Maschine.circulate()
+    constructor: (@Method) ->
+        this::circulate = Method
 
 window.Circulator = Circulator
