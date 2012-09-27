@@ -3,11 +3,16 @@
   var Maschine, newID;
 
   Maschine = (function() {
-    var canvasName, objects;
+    var canvasName, frameRate, objects;
 
     objects = [];
 
     canvasName = "";
+
+    timeStamp;
+
+
+    frameRate = 25;
 
     function Maschine(sectionID, dimX, dimY) {
       var sect;
@@ -15,6 +20,7 @@
       this.dimX = dimX;
       this.dimY = dimY;
       this.canvasName = newID();
+      this.timeStamp = Date.prototype.getTime();
       sect = document.getElementById(this.sectionID);
       sect.innerHTML = "<canvas id=" + this.canvasName + " width=" + this.dimX + " height=" + this.dimY + " style='border:1px solid #000000';>" + "</canvas>";
     }
@@ -63,6 +69,15 @@
       y1 = rect.posY;
       y2 = rect.posY + rect.dimY;
       return context.fillRect(x1, y1, x2, y2);
+    };
+
+    Maschine.prototype._checkRefresh = function() {
+      var curTime;
+      curTime = Date.prototype.getTime();
+      if ((curTime - timeStamp) > (1000 / this.frameRate)) {
+        this._redrawCanvas();
+        return this.timeStamp = curTime;
+      }
     };
 
     Maschine.prototype.getContext = function() {

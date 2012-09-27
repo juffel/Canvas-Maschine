@@ -3,11 +3,14 @@ class Maschine
     # objects ist erstmal ein Array vom Typ rectangle
     objects = []
     canvasName = ""
+    timeStamp
+    frameRate = 25
     #             |ID der Sektion im HTML-Code, in welcher der Canvas
     #             |platziert werden soll
     #             V
     constructor: (@sectionID, @dimX, @dimY) ->
         @canvasName = newID()
+        @timeStamp = Date::getTime()
         sect = document.getElementById(@sectionID)
         sect.innerHTML="<canvas id="+@canvasName+
                        " width="+@dimX+
@@ -39,6 +42,7 @@ class Maschine
         # redraw
         for o in objects
             @_drawRectangle(o, context)
+
     
     # zeichnet ein einzelnes Objekt auf den Canvas
     _drawRectangle: (rect) ->
@@ -51,7 +55,15 @@ class Maschine
         y1 = rect.posY
         y2 = rect.posY + rect.dimY
         context.fillRect(x1, y1, x2, y2)
+
     
+    _checkRefresh: () ->
+        curTime = Date::getTime()
+        if (curTime-timeStamp) > (1000/@frameRate)
+            @_redrawCanvas()
+            @timeStamp = curTime
+
+
     getContext: () ->
         canvas = document.getElementById(@canvasName)
         return canvas.getContext("2d")
