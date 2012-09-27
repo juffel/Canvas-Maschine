@@ -11,3 +11,6 @@ Zur Canvasseite hin:
 - userInput (um z.B. Mausklicks an die Applikation weiterleiten zu können)
 
 Der Maschine soll im Konstruktoraufruf die ID eines Abschnitts im HTML Code übergeben werden, in welchen sie dann selbst einen canvas einfügt und ggf. verändern kann.
+
+Die Maschine soll in etwa folgendermaßen funktionieren: Durch Methodenaufrufe können im Objektarray der Maschine graphische Objekte erzeugt/modifiziert/gelöscht werden; der Canvas soll nur in bestimmten Abständen neu gezeichnet werden um Resourcen zu schonen. Da ich nicht weiß, wie/ob man Threads in JavaScript handlen kann greife ich auf eine unschönere Konstruktion zurück.
+Bei jeder Modifikation wird geprüft, wie lange es her ist, dass der Canvas das letzte mal aktualisiert wurde, ein Zeitstempel wird geprüft. Am besten gibt man der zeichnenden Komponente mit entsprechenden Methoden die Möglichkeit offen mit oder ohne eine solche Überprüfung Objekte zu modifzieren.
