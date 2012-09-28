@@ -3,13 +3,15 @@
   var Maschine, newID;
 
   Maschine = (function() {
-    var canvasName, frameRate, objects, timeStamp;
+    var canvasName, frameRate, objects, timeMS, timeS;
 
     objects = [];
 
     canvasName = "";
 
-    timeStamp = 0;
+    timeMS = 0;
+
+    timeS = 0;
 
     frameRate = 25;
 
@@ -19,30 +21,42 @@
       this.dimX = dimX;
       this.dimY = dimY;
       this.canvasName = newID();
-      this.timeStamp = Date.prototype.getTime();
+      this.timeS = Date.prototype.getSeconds();
+      this.timeMS = Date.prototype.getMilliseconds();
       sect = document.getElementById(this.sectionID);
       sect.innerHTML = "<canvas id=" + this.canvasName + " width=" + this.dimX + " height=" + this.dimY + " style='border:1px solid #000000';>" + "</canvas>";
     }
 
-    Maschine.prototype.registerNewObject = function(gObj) {
-      objects.splice(objects.length, 0, gObj);
-      this._drawRectangle(gObj);
+    Maschine.prototype.addObjectShyly = function(gObj) {
+      return objects.splice(objects.length, 0, gObj);
+    };
+
+    Maschine.prototype.addObject = function(gObj) {
+      this.addObjectShyly(gObj);
       return this._checkRefresh();
     };
 
-    Maschine.prototype.removeObject = function(gObj) {
+    Maschine.prototype.removeObjectShyly = function(gObj) {
       var ind;
       ind = objects.indexOf(gObj);
       return objects.splice(ind, 1);
     };
 
-    Maschine.prototype.updateObject = function(gObj, new_gObj) {
+    Maschine.prototype.removeObject = function(gObj) {
+      this.removeObjectShyly(gObj);
+      return this._checkRefresh();
+    };
+
+    Maschine.prototype.updateObjectShyly = function(gObj, new_gObj) {
       var ind;
       ind = objects.indexOf(gObj);
       return objects[ind] = new_gObj;
     };
 
-    Maschine.prototype.userInput = function() {};
+    Maschine.prototype.updateObject = function(gObj, new_gObj) {
+      this.updateObjectShyly(gObj, new_gObj);
+      return this._checkRefresh();
+    };
 
     Maschine.prototype._redrawCanvas = function() {
       var context, o, _i, _len, _results;
@@ -51,33 +65,25 @@
       _results = [];
       for (_i = 0, _len = objects.length; _i < _len; _i++) {
         o = objects[_i];
-        _results.push(this._drawRectangle(o, context));
+        _results.push(o.draw(context));
       }
       return _results;
     };
 
-    Maschine.prototype._drawRectangle = function(rect) {
-      var context;
-      context = this.getContext();
-      return this._drawRectangle(rect, context);
-    };
-
-    Maschine.prototype._drawRectangle = function(rect, context) {
-      var x1, x2, y1, y2;
-      context.fillStyle = rect.color;
-      x1 = rect.posX;
-      x2 = rect.posX + rect.dimX;
-      y1 = rect.posY;
-      y2 = rect.posY + rect.dimY;
-      return context.fillRect(x1, y1, x2, y2);
-    };
-
     Maschine.prototype._checkRefresh = function() {
-      var curTime;
-      curTime = Date.prototype.getTime();
-      if ((curTime - timeStamp) > (1000 / this.frameRate)) {
+      var curMS, curS;
+      curMS = Date.prototype.getMilliseconds();
+      if ((cur - this.timeMS) > (1000 / this.frameRate)) {
         this._redrawCanvas();
-        return this.timeStamp = curTime;
+        this.timeMS = curMS;
+        return this.timeS = Date.prototype.getSeconds();
+      } else {
+        curS = Date.prototype.getSeconds();
+        if ((curS - this.timeS) > 1) {
+          this._redrawCanvas();
+          this.timeS = curS;
+          return this.timeMS = Date.prototype.getMilliseconds();
+        }
       }
     };
 

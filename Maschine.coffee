@@ -1,16 +1,17 @@
 class Maschine
     # TODO Ebenen einfuehren
-    # objects ist erstmal ein Array vom Typ rectangle
     objects = []
     canvasName = ""
-    timeStamp = 0
+    timeMS = 0
+    timeS = 0
     frameRate = 25
     #             |ID der Sektion im HTML-Code, in welcher der Canvas
     #             |platziert werden soll
     #             V
     constructor: (@sectionID, @dimX, @dimY) ->
         @canvasName = newID()
-        @timeStamp = Date::getTime()
+        @timeS = Date::getSeconds()
+        @timeMS = Date::getMilliseconds()
         sect = document.getElementById(@sectionID)
         sect.innerHTML="<canvas id="+@canvasName+
                        " width="+@dimX+
@@ -19,11 +20,10 @@ class Maschine
                        # " onclick='...'"
                        "</canvas>"
 
-
-    registerNewObjectShyly: (gObj) ->
+    addObjectShyly: (gObj) ->
         objects.splice(objects.length, 0, gObj)
-    registerNewObject: (gObj) ->
-        @registerNewObjectShyly(gObj)
+    addObject: (gObj) ->
+        @addObjectShyly(gObj)
         @_checkRefresh()
 
     removeObjectShyly: (gObj) ->
@@ -40,9 +40,6 @@ class Maschine
         @updateObjectShyly(gObj, new_gObj)
         @_checkRefresh()
 
-    userInput: () ->
-
-
     # zeichnet den Canvas komplett neu
     _redrawCanvas: () ->
         context = @getContext()
@@ -50,18 +47,29 @@ class Maschine
         context.clearRect(0,0, @dimX, @dimY)
         # redraw
         for o in objects
-            @_drawRectangle(o, context)
+            o.draw(context)
     
+    # hier wird geprüft, ob bereits genug Zeit vergangen ist, um den canvas
+    # zu refreshen. Erst wird auf die Millisekunden geprüft, wenn das nicht
+    # zu einem Refresh führt, dann werden noch die vergangenen Sekunden ge-
+    # prüft.
     _checkRefresh: () ->
-        curTime = Date::getTime()
-        if (curTime-timeStamp) > (1000/@frameRate)
+        curMS = Date::getMilliseconds()
+        if (cur-@timeMS) > (1000/@frameRate)
             @_redrawCanvas()
-            @timeStamp = curTime
-
+            @timeMS = curMS
+            @timeS = Date::getSeconds()
+        else
+            curS = Date::getSeconds()
+            if (curS - @timeS) > 1
+                @_redrawCanvas()
+                @timeS = curS
+                @timeMS = Date::getMilliseconds()
 
     getContext: () ->
         canvas = document.getElementById(@canvasName)
         return canvas.getContext("2d")
+
 
 newID = () ->
     Math.random() * 16
