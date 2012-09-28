@@ -37,10 +37,10 @@
       var x1, x2, y1, y2;
       context.fillStyle = this.color;
       x1 = this.posX;
-      x2 = this.posX + rect.dimX;
+      x2 = this.posX + this.dimX;
       y1 = this.posY;
-      y2 = this.posY + rect.dimY;
-      return context.fill(x1, y1, x2, y2);
+      y2 = this.posY + this.dimY;
+      return context.fillRect(x1, y1, x2, y2);
     };
 
     return Rectangle;

@@ -14,10 +14,10 @@ class Rectangle extends GObject
     draw: (context) ->
         context.fillStyle = @color
         x1 = @posX
-        x2 = @posX + rect.dimX
+        x2 = @posX + @dimX
         y1 = @posY
-        y2 = @posY + rect.dimY
-        context.fill(x1, y1, x2, y2)
+        y2 = @posY + @dimY
+        context.fillRect(x1, y1, x2, y2)
 
 window.Rectangle = Rectangle
 

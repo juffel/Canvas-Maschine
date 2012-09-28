@@ -3,15 +3,11 @@
   var Maschine, newID;
 
   Maschine = (function() {
-    var canvasName, frameRate, objects, timeMS, timeS;
+    var canvasName, frameRate, objects;
 
     objects = [];
 
     canvasName = "";
-
-    timeMS = 0;
-
-    timeS = 0;
 
     frameRate = 25;
 
@@ -21,8 +17,9 @@
       this.dimX = dimX;
       this.dimY = dimY;
       this.canvasName = newID();
-      this.timeS = Date.prototype.getSeconds();
-      this.timeMS = Date.prototype.getMilliseconds();
+      this.date = new Date();
+      this.timeS = this.date.getSeconds();
+      this.timeMS = this.date.getMilliseconds();
       sect = document.getElementById(this.sectionID);
       sect.innerHTML = "<canvas id=" + this.canvasName + " width=" + this.dimX + " height=" + this.dimY + " style='border:1px solid #000000';>" + "</canvas>";
     }
@@ -33,7 +30,7 @@
 
     Maschine.prototype.addObject = function(gObj) {
       this.addObjectShyly(gObj);
-      return this._checkRefresh();
+      return this._refresh();
     };
 
     Maschine.prototype.removeObjectShyly = function(gObj) {
@@ -44,7 +41,7 @@
 
     Maschine.prototype.removeObject = function(gObj) {
       this.removeObjectShyly(gObj);
-      return this._checkRefresh();
+      return this._refresh();
     };
 
     Maschine.prototype.updateObjectShyly = function(gObj, new_gObj) {
@@ -55,7 +52,7 @@
 
     Maschine.prototype.updateObject = function(gObj, new_gObj) {
       this.updateObjectShyly(gObj, new_gObj);
-      return this._checkRefresh();
+      return this._refresh();
     };
 
     Maschine.prototype._redrawCanvas = function() {
@@ -72,19 +69,25 @@
 
     Maschine.prototype._checkRefresh = function() {
       var curMS, curS;
-      curMS = Date.prototype.getMilliseconds();
-      if ((cur - this.timeMS) > (1000 / this.frameRate)) {
+      this.date = new Date();
+      curMS = this.date.getMilliseconds();
+      curS = this.date.getSeconds();
+      if ((curMS - this.timeMS) > (1000 / this.frameRate)) {
         this._redrawCanvas();
         this.timeMS = curMS;
-        return this.timeS = Date.prototype.getSeconds();
+        return this.timeS = curS;
       } else {
-        curS = Date.prototype.getSeconds();
+        curS = this.date.getSeconds();
         if ((curS - this.timeS) > 1) {
           this._redrawCanvas();
-          this.timeS = curS;
-          return this.timeMS = Date.prototype.getMilliseconds();
+          this.timeMS = curMS;
+          return this.timeS = curS;
         }
       }
+    };
+
+    Maschine.prototype._refresh = function() {
+      return this._redrawCanvas();
     };
 
     Maschine.prototype.getContext = function() {
@@ -98,7 +101,7 @@
   })();
 
   newID = function() {
-    return Math.random() * 16;
+    return Math.floor(Math.random() * 10000);
   };
 
   window.Maschine = Maschine;
