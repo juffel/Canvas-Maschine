@@ -20,16 +20,25 @@ class Maschine
                        "</canvas>"
 
 
-    registerNewObject: (gObj) ->
+    registerNewObjectShyly: (gObj) ->
         objects.splice(objects.length, 0, gObj)
+    registerNewObject: (gObj) ->
+        @registerNewObjectShyly(gObj)
+        @_checkRefresh()
 
-    removeObject: (gObj) ->
+    removeObjectShyly: (gObj) ->
         ind = objects.indexOf(gObj)
         objects.splice(ind, 1)
+    removeObject: (gObj) ->
+        @removeObjectShyly(gObj)
+        @_checkRefresh()
 
-    updateObject: (gObj, new_gObj) ->
+    updateObjectShyly: (gObj, new_gObj) ->
         ind = objects.indexOf(gObj)
         objects[ind] = new_gObj
+    updateObject: (gObj, new_gObj) ->
+        @updateObjectShyly(gObj, new_gObj)
+        @_checkRefresh()
 
     userInput: () ->
 
@@ -42,20 +51,6 @@ class Maschine
         # redraw
         for o in objects
             @_drawRectangle(o, context)
-
-    
-#    # zeichnet ein einzelnes Objekt auf den Canvas
-#    _drawRectangle: (rect) ->
-#        context = @getContext()
-#        @_drawRectangle(rect, context)
-#    _drawRectangle: (rect, context) ->
-#        context.fillStyle = rect.color
-#        x1 = rect.posX
-#        x2 = rect.posX + rect.dimX
-#        y1 = rect.posY
-#        y2 = rect.posY + rect.dimY
-#        context.fillRect(x1, y1, x2, y2)
-
     
     _checkRefresh: () ->
         curTime = Date::getTime()
