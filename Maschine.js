@@ -3,14 +3,13 @@
   var Maschine, newID;
 
   Maschine = (function() {
-    var canvasName, frameRate, objects;
+    var canvasName, frameRate, objects, timeStamp;
 
     objects = [];
 
     canvasName = "";
 
-    timeStamp;
-
+    timeStamp = 0;
 
     frameRate = 25;
 
@@ -26,7 +25,9 @@
     }
 
     Maschine.prototype.registerNewObject = function(gObj) {
-      return objects.splice(objects.length, 0, gObj);
+      objects.splice(objects.length, 0, gObj);
+      this._drawRectangle(gObj);
+      return this._checkRefresh();
     };
 
     Maschine.prototype.removeObject = function(gObj) {
@@ -58,7 +59,7 @@
     Maschine.prototype._drawRectangle = function(rect) {
       var context;
       context = this.getContext();
-      return _drawRectangle(rect, context);
+      return this._drawRectangle(rect, context);
     };
 
     Maschine.prototype._drawRectangle = function(rect, context) {

@@ -3,7 +3,7 @@ class Maschine
     # objects ist erstmal ein Array vom Typ rectangle
     objects = []
     canvasName = ""
-    timeStamp
+    timeStamp = 0
     frameRate = 25
     #             |ID der Sektion im HTML-Code, in welcher der Canvas
     #             |platziert werden soll
@@ -44,17 +44,17 @@ class Maschine
             @_drawRectangle(o, context)
 
     
-    # zeichnet ein einzelnes Objekt auf den Canvas
-    _drawRectangle: (rect) ->
-        context = @getContext()
-        _drawRectangle(rect, context)
-    _drawRectangle: (rect, context) ->
-        context.fillStyle = rect.color
-        x1 = rect.posX
-        x2 = rect.posX + rect.dimX
-        y1 = rect.posY
-        y2 = rect.posY + rect.dimY
-        context.fillRect(x1, y1, x2, y2)
+#    # zeichnet ein einzelnes Objekt auf den Canvas
+#    _drawRectangle: (rect) ->
+#        context = @getContext()
+#        @_drawRectangle(rect, context)
+#    _drawRectangle: (rect, context) ->
+#        context.fillStyle = rect.color
+#        x1 = rect.posX
+#        x2 = rect.posX + rect.dimX
+#        y1 = rect.posY
+#        y2 = rect.posY + rect.dimY
+#        context.fillRect(x1, y1, x2, y2)
 
     
     _checkRefresh: () ->

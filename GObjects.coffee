@@ -10,6 +10,14 @@ window.GObject = GObject
 class Rectangle extends GObject
     constructor: (color, posX, posY, @dimX, @dimY) ->
         super(color, posX, posY)
+    
+    draw: (context) ->
+        context.fillStyle = @color
+        x1 = @posX
+        x2 = @posX + rect.dimX
+        y1 = @posY
+        y2 = @posY + rect.dimY
+        context.fill(x1, y1, x2, y2)
 
 window.Rectangle = Rectangle
 
