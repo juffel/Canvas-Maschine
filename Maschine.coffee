@@ -16,8 +16,10 @@ class Maschine
                        " width="+@dimX+
                        " height="+@dimY+
                        " style='border:1px solid #000000';>"+
-                       # " onclick='...'"
                        "</canvas>"
+        document.getElementById(@canvasName).addEventListener('mousemove', @ev_mouse, false)
+
+    ev_mouse: (event) ->
 
     addObjectShyly: (gObj) ->
         objects.splice(objects.length, 0, gObj)
@@ -30,6 +32,10 @@ class Maschine
         objects.splice(ind, 1)
     removeObject: (gObj) ->
         @removeObjectShyly(gObj)
+        @_refresh()
+
+    clear: () ->
+        objects = []
         @_refresh()
 
     updateObjectShyly: (gObj, new_gObj) ->
