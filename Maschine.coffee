@@ -20,11 +20,15 @@ class Maschine
                        "</canvas>"
         document.getElementById(@canvasName).addEventListener('mousemove', @ev_mouse, false)
         document.getElementById(@canvasName).addEventListener('click', @ev_mouse, false)
-        document.addEventListener('keypress', @ev_keydown, false)
+        document.addEventListener('keydown', @ev_keydown, false)
+        document.addEventListener('keypress', @ev_keypress, false)
+        document.addEventListener('keyup', @ev_keyup, false)
 
     ev_mouse: (event) ->
     ev_click: (event) ->
     ev_keydown: (event) ->
+    ev_keypress: (event) ->
+    ev_keyup: (event) ->
 
     addObjectShyly: (gObj) ->
         @objects.splice(objects.length, 0, gObj)

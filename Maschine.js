@@ -25,7 +25,9 @@
       sect.innerHTML = "<canvas id=" + this.canvasName + " width=" + this.dimX + " height=" + this.dimY + " style='border:1px solid #000000';>" + "</canvas>";
       document.getElementById(this.canvasName).addEventListener('mousemove', this.ev_mouse, false);
       document.getElementById(this.canvasName).addEventListener('click', this.ev_mouse, false);
-      document.addEventListener('keypress', this.ev_keydown, false);
+      document.addEventListener('keydown', this.ev_keydown, false);
+      document.addEventListener('keypress', this.ev_keypress, false);
+      document.addEventListener('keyup', this.ev_keyup, false);
     }
 
     Maschine.prototype.ev_mouse = function(event) {};
@@ -33,6 +35,10 @@
     Maschine.prototype.ev_click = function(event) {};
 
     Maschine.prototype.ev_keydown = function(event) {};
+
+    Maschine.prototype.ev_keypress = function(event) {};
+
+    Maschine.prototype.ev_keyup = function(event) {};
 
     Maschine.prototype.addObjectShyly = function(gObj) {
       return this.objects.splice(objects.length, 0, gObj);
