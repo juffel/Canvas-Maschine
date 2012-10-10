@@ -11,17 +11,19 @@ class twoWay extends Maschine
         @addObject(@charaKey)
 
     ev_mouse: (event) =>
+        if(overlap(@charaKey, event.clientX, event.clientY))
+            return
+
         if(@charaMouse == undefined)
             @charaMouse = new Rectangle("#0B0B61", event.clientX, event.clientY, 40, 40)
             @addObject(@charaMouse)
-            @_refresh()
         else
             @charaMouse.posX = event.clientX
             @charaMouse.posY = event.clientY
-            @_refresh()
+
+        @_refresh()
 
     ev_keydown: (event) =>
-        #alert(event.keyCode)
         # links
         if(event.keyCode == 37)
             @charaKey.posX -= @speed
@@ -35,5 +37,11 @@ class twoWay extends Maschine
         else if(event.keyCode == 40)
             @charaKey.posY += @speed
         @_refresh()
+
+# only works for squares of the same size^^
+overlappy = (sq1, sq2) ->
+    return overlap(sq1, sq2.posX, sq2.posY)
+overlap = (sq1, x2, y2) ->
+    return (x2 >= sq1.posX-sq1.dimX && x2 <= sq1.posX+sq1.dimX && y2 >= sq1.posY-sq1.dimY && y2 <= sq1.posY+sq1.dimY)
 
 inst = new twoWay()
