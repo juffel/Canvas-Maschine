@@ -10,21 +10,39 @@
     __extends(RandMaschine, _super);
 
     function RandMaschine() {
+      this.ev_keydown = __bind(this.ev_keydown, this);
+
       this.ev_mouse = __bind(this.ev_mouse, this);
       return RandMaschine.__super__.constructor.apply(this, arguments);
     }
 
     RandMaschine.prototype.ev_mouse = function(event) {
       var color, i, tmp, x1, x2, y1, y2, _i, _results;
+      this.clear();
       _results = [];
       for (i = _i = 0; _i <= 4; i = ++_i) {
         color = "#000000";
         x1 = Math.floor(Math.random() * testMaschine.dimX);
-        x2 = Math.floor((x1 + Math.random() * testMaschine.dimX) % testMaschine.dimX);
+        x2 = Math.floor(Math.random() * testMaschine.dimX);
         y1 = Math.floor(Math.random() * testMaschine.dimY);
-        y2 = Math.floor((y1 + Math.random() * testMaschine.dimY) % testMaschine.dimY);
+        y2 = Math.floor(Math.random() * testMaschine.dimY);
         tmp = new Rectangle(color, x1, y1, x2, y2);
-        this.clear();
+        _results.push(this.addObject(tmp));
+      }
+      return _results;
+    };
+
+    RandMaschine.prototype.ev_keydown = function(event) {
+      var color, i, tmp, x1, x2, y1, y2, _i, _results;
+      this.clear();
+      _results = [];
+      for (i = _i = 0; _i <= 4; i = ++_i) {
+        color = "#000000";
+        x1 = Math.floor(Math.random() * testMaschine.dimX);
+        x2 = Math.floor(Math.random() * testMaschine.dimX);
+        y1 = Math.floor(Math.random() * testMaschine.dimY);
+        y2 = Math.floor(Math.random() * testMaschine.dimY);
+        tmp = new Rectangle(color, x1, y1, x2, y2);
         _results.push(this.addObject(tmp));
       }
       return _results;

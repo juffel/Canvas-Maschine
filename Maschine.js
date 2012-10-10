@@ -23,9 +23,12 @@
       sect = document.getElementById(this.sectionID);
       sect.innerHTML = "<canvas id=" + this.canvasName + " width=" + this.dimX + " height=" + this.dimY + " style='border:1px solid #000000';>" + "</canvas>";
       document.getElementById(this.canvasName).addEventListener('mousemove', this.ev_mouse, false);
+      document.addEventListener('keypress', this.ev_keydown, false);
     }
 
     Maschine.prototype.ev_mouse = function(event) {};
+
+    Maschine.prototype.ev_keydown = function(event) {};
 
     Maschine.prototype.addObjectShyly = function(gObj) {
       return objects.splice(objects.length, 0, gObj);

@@ -18,8 +18,11 @@ class Maschine
                        " style='border:1px solid #000000';>"+
                        "</canvas>"
         document.getElementById(@canvasName).addEventListener('mousemove', @ev_mouse, false)
+        document.addEventListener('keypress', @ev_keydown, false)
 
     ev_mouse: (event) ->
+
+    ev_keydown: (event) ->
 
     addObjectShyly: (gObj) ->
         objects.splice(objects.length, 0, gObj)
