@@ -11,6 +11,7 @@ class Maschine
         @date = new Date()
         @timeS = @date.getSeconds()
         @timeMS = @date.getMilliseconds()
+        @objects = []
         sect = document.getElementById(@sectionID)
         sect.innerHTML="<canvas id="+@canvasName+
                        " width="+@dimX+
@@ -18,32 +19,33 @@ class Maschine
                        " style='border:1px solid #000000';>"+
                        "</canvas>"
         document.getElementById(@canvasName).addEventListener('mousemove', @ev_mouse, false)
+        document.getElementById(@canvasName).addEventListener('click', @ev_mouse, false)
         document.addEventListener('keypress', @ev_keydown, false)
 
     ev_mouse: (event) ->
-
+    ev_click: (event) ->
     ev_keydown: (event) ->
 
     addObjectShyly: (gObj) ->
-        objects.splice(objects.length, 0, gObj)
+        @objects.splice(objects.length, 0, gObj)
     addObject: (gObj) ->
         @addObjectShyly(gObj)
         @_refresh()
 
     removeObjectShyly: (gObj) ->
         ind = objects.indexOf(gObj)
-        objects.splice(ind, 1)
+        @objects.splice(ind, 1)
     removeObject: (gObj) ->
         @removeObjectShyly(gObj)
         @_refresh()
 
     clear: () ->
-        objects = []
+        @objects = []
         @_refresh()
 
     updateObjectShyly: (gObj, new_gObj) ->
         ind = objects.indexOf(gObj)
-        objects[ind] = new_gObj
+        @objects[ind] = new_gObj
     updateObject: (gObj, new_gObj) ->
         @updateObjectShyly(gObj, new_gObj)
         @_refresh()
@@ -54,7 +56,7 @@ class Maschine
         # clear
         context.clearRect(0,0, @dimX, @dimY)
         # redraw
-        for o in objects
+        for o in @objects
             o.draw(context)
     
     # TODO hier wird geprüft, ob bereits genug Zeit vergangen ist, um den canvas

@@ -1,28 +1,27 @@
 class RandMaschine extends Maschine
     ev_mouse: (event) =>
         @clear()
-        for i in [0..4]
+        for i in [0..10]
             color = "#000000"
-            x1 = Math.floor(Math.random() * testMaschine.dimX)
-            #x2 = Math.floor((x1 + Math.random() * testMaschine.dimX) % testMaschine.dimX)
-            x2 = Math.floor(Math.random() * testMaschine.dimX)
-            y1 = Math.floor(Math.random() * testMaschine.dimY)
-            #y2 = Math.floor((y1 + Math.random() * testMaschine.dimY) % testMaschine.dimY)
-            y2 = Math.floor(Math.random() * testMaschine.dimY)
+            x1 = Math.floor(Math.random() * testMaschine.dimX * 1.5) - testMaschine.dimX/4
+            x2 = Math.ceil(Math.random() * testMaschine.dimX) + testMaschine.dimX/4
+            y1 = Math.floor(Math.random() * testMaschine.dimY) - testMaschine.dimY/4
+            y2 = Math.ceil(Math.random() * testMaschine.dimY) + testMaschine.dimY/4
             tmp = new Rectangle(color, x1, y1, x2, y2)
             @addObject(tmp)
 
     ev_keydown: (event) =>
-        @clear()
-        for i in [0..4]
-            color = "#000000"
-            x1 = Math.floor(Math.random() * testMaschine.dimX)
-            #x2 = Math.floor((x1 + Math.random() * testMaschine.dimX) % testMaschine.dimX)
-            x2 = Math.floor(Math.random() * testMaschine.dimX)
-            y1 = Math.floor(Math.random() * testMaschine.dimY)
-            #y2 = Math.floor((y1 + Math.random() * testMaschine.dimY) % testMaschine.dimY)
-            y2 = Math.floor(Math.random() * testMaschine.dimY)
-            tmp = new Rectangle(color, x1, y1, x2, y2)
-            @addObject(tmp)
+        for o in @objects
+            o.color = getRandomColor()
+        @_refresh()
 
-testMaschine = new RandMaschine("canvasArea", 800, 600)
+getRandomColor = () ->
+    letters = '0123456789ABDCEF'.split('')
+    color = '#'
+    for i in [0..5]
+        color += letters[Math.round(Math.random() * 15)]
+    color
+
+testMaschine = new RandMaschine("canvasArea", window.innerWidth-20, window.innerHeight-20)
+document.documentElement.style.overflow = 'hidden'  # firefox, chrome
+document.body.scroll = "no" # ie only
