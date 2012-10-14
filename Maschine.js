@@ -24,7 +24,7 @@
       sect = document.getElementById(this.sectionID);
       sect.innerHTML = "<canvas id=" + this.canvasName + " width=" + this.dimX + " height=" + this.dimY + " style='border:1px solid #000000';>" + "</canvas>";
       document.getElementById(this.canvasName).addEventListener('mousemove', this.ev_mouse, false);
-      document.getElementById(this.canvasName).addEventListener('click', this.ev_mouse, false);
+      document.getElementById(this.canvasName).addEventListener('click', this.ev_click, false);
       document.addEventListener('keydown', this.ev_keydown, false);
       document.addEventListener('keypress', this.ev_keypress, false);
       document.addEventListener('keyup', this.ev_keyup, false);

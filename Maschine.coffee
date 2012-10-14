@@ -19,7 +19,7 @@ class Maschine
                        " style='border:1px solid #000000';>"+
                        "</canvas>"
         document.getElementById(@canvasName).addEventListener('mousemove', @ev_mouse, false)
-        document.getElementById(@canvasName).addEventListener('click', @ev_mouse, false)
+        document.getElementById(@canvasName).addEventListener('click', @ev_click, false)
         document.addEventListener('keydown', @ev_keydown, false)
         document.addEventListener('keypress', @ev_keypress, false)
         document.addEventListener('keyup', @ev_keyup, false)

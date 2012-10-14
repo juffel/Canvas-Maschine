@@ -12,7 +12,9 @@
     function TestMaschine(canvasName, width, height) {
       this.ev_mouse = __bind(this.ev_mouse, this);
 
-      var centerX, centerY, p, poly;
+      this.ev_keydown = __bind(this.ev_keydown, this);
+
+      var centerX, centerY, p;
       TestMaschine.__super__.constructor.call(this, canvasName, width, height);
       centerX = Math.floor(this.dimX / 2);
       centerY = Math.floor(this.dimY / 2);
@@ -20,18 +22,70 @@
       this.l2 = new Line("#000000", this.dimX, 0, centerX, centerY);
       this.l3 = new Line("#000000", this.dimX, this.dimY, centerX, centerY);
       this.l4 = new Line("#000000", 0, this.dimY, centerX, centerY);
+      this.l5 = new Line("#000000", 100, 100, centerX, centerY);
+      this.l6 = new Line("#000000", 300, 100, centerX, centerY);
+      this.l7 = new Line("#000000", 200, 200, centerX, centerY);
       this.addObjectShyly(this.l1);
       this.addObjectShyly(this.l2);
       this.addObjectShyly(this.l3);
-      this.addObject(this.l4);
+      this.addObjectShyly(this.l4);
+      this.addObjectShyly(this.l5);
+      this.addObjectShyly(this.l6);
+      this.addObject(this.l7);
       p = [];
-      p[0] = new Point(0, 0);
-      p[1] = new Point(100, 100);
-      p[2] = new Point(300, 100);
-      p[3] = new Point(200, 200);
-      poly = new Polygon("#000000", p);
-      this.addObject(poly);
+      p[0] = new Point(100, 100);
+      p[1] = new Point(300, 100);
+      p[2] = new Point(200, 200);
+      this.poly = new Polygon("#000000", p);
+      this.polly = new Polygon("#00AA00", [p[0], p[1], new Point(centerX, centerY)]);
+      this.addObject(this.poly);
+      this.addObject(this.polly);
     }
+
+    TestMaschine.prototype.ev_keydown = function(event) {
+      var oldX, oldY, p, speed, _i, _j, _k, _l, _len, _len1, _len2, _len3, _ref, _ref1, _ref2, _ref3;
+      oldX = this.poly.points[0].x;
+      oldY = this.poly.points[0].y;
+      speed = 4;
+      if (event.keyCode === 37) {
+        _ref = this.poly.points;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          p = _ref[_i];
+          p.x -= speed;
+        }
+        this.l5.pos.x -= speed;
+        this.l6.pos.x -= speed;
+        this.l7.pos.x -= speed;
+      } else if (event.keyCode === 38) {
+        _ref1 = this.poly.points;
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          p = _ref1[_j];
+          p.y -= speed;
+        }
+        this.l5.pos.y -= speed;
+        this.l6.pos.y -= speed;
+        this.l7.pos.y -= speed;
+      } else if (event.keyCode === 39) {
+        _ref2 = this.poly.points;
+        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+          p = _ref2[_k];
+          p.x += speed;
+        }
+        this.l5.pos.x += speed;
+        this.l6.pos.x += speed;
+        this.l7.pos.x += speed;
+      } else if (event.keyCode === 40) {
+        _ref3 = this.poly.points;
+        for (_l = 0, _len3 = _ref3.length; _l < _len3; _l++) {
+          p = _ref3[_l];
+          p.y += speed;
+        }
+        this.l5.pos.y += speed;
+        this.l6.pos.y += speed;
+        this.l7.pos.y += speed;
+      }
+      return this._refresh();
+    };
 
     TestMaschine.prototype.ev_mouse = function(event) {
       this.l1.toX = event.clientX;
@@ -42,6 +96,14 @@
       this.l3.toY = event.clientY;
       this.l4.toX = event.clientX;
       this.l4.toY = event.clientY;
+      this.l5.toX = event.clientX;
+      this.l5.toY = event.clientY;
+      this.l6.toX = event.clientX;
+      this.l6.toY = event.clientY;
+      this.l7.toX = event.clientX;
+      this.l7.toY = event.clientY;
+      this.polly.points[2].x = event.clientX;
+      this.polly.points[2].y = event.clientY;
       return this._refresh();
     };
 
@@ -50,5 +112,7 @@
   })(Maschine);
 
   testMaschine = new TestMaschine("canvasArea", window.innerWidth - 20, window.innerHeight - 20);
+
+  document.documentElement.style.overflow = 'hidden';
 
 }).call(this);
