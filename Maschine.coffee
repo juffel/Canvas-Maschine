@@ -23,6 +23,8 @@ class Maschine
         document.addEventListener('keydown', @ev_keydown, false)
         document.addEventListener('keypress', @ev_keypress, false)
         document.addEventListener('keyup', @ev_keyup, false)
+        
+        setInterval ( => @_refresh() ), 100
 
     ev_mouse: (event) ->
     ev_click: (event) ->

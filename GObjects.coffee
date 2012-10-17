@@ -1,6 +1,5 @@
 class GObject
-    constructor: (@color, @x, @y) ->
-    
+    constructor: (@x, @y) ->
     getX: () =>
         @x
     getY: () =>
@@ -9,46 +8,65 @@ class GObject
         @x = x
     setY: (y) =>
         @y = y
+    move: (x, y) =>
+        @x += x
+        @y += y
+    moveTo: (x, y) =>
+        @x = x
+        @y = y
+
+class Point extends GObject
+
+class Shape extends GObject
+    constructor: (@color, x, y) ->
+        super(x, y)
     getColor: () =>
         @color
     setColor: (color) =>
         @color = color
-    
-    move: (x, y) ->
-        @x += x
-        @y += y
-    moveTo: (x, y) ->
-        @x = x
-        @y = y
 
-class Point
-    constructor: (@x, @y, @z = undefined) ->
-
-class Polygon extends GObject
+class Polygon extends Shape
     constructor: (color, @points) ->
-        super(color, @points[0].x, @points[0].y)
-
+        super(color, @points[0].getX(), @points[0].getY())
+        @fill = true
+    
+    getX: () =>
+        @points[0].getX()
+    getY: () =>
+        @points[0].getY()
+    setX: (x) =>
+        @points[0].setX(x)
+    setY: (y) =>
+        @points[0].setY(y)
+    fill: () =>
+        @fill = true
+    stroke: () =>
+        @fill = false
+        
     move: (x, y) =>
         for p in @points
-            p.x += x
-            p.y += y
-        @x = @getX()
-        @y = @getY()
+            p.move(x, y)
 
     moveTo: (x, y) =>
-        moveX = x - @x
-        moveY = y - @y
+        moveX = x - @getX()
+        moveY = y - @getY()
         @move(moveX, moveY)
+
+    getPoint: (ind) =>
+        @points[ind]
 
     draw: (context) ->
         context.beginPath()
         context.fillStyle = @color
-        context.moveTo(@points[0].x, @points[0].y)
+        context.moveTo(@getX(), @getY())
         for p in @points
-            context.lineTo(p.x, p.y)
+            context.lineTo(p.getX(), p.getY())
 
-        context.lineTo(@points[0].x, @points[0].y)
-        context.fill()
+        context.lineTo(@getX(), @getY())
+        if(@fill)
+            context.fill()
+        else
+            context.stroke()
         context.closePath()
 
 class Rectangle extends Polygon
@@ -60,27 +78,18 @@ class Rectangle extends Polygon
         context.fillRect(@posX, @posY, @dimX, @dimY)
 
 class Line extends Polygon
-    constructor: (color, x1, y1, @toX, @toY) ->
-        super(color, x1, y1)
+    constructor: (color, p1, @p2) ->
+        super(color, [ p1, @p2 ])
+        @stroke()
 
-    move: (x, y) ->
-        @x += x
-        @y += y
-        @toX += x
-        @toY += y
-    moveTo: (x, y) ->
-        @x = x
-        @y = y
-        @toX = x - @x
-        @toY = y - @y
+    getToX: () =>
+        @getPoint(1).getX()
+    getToY: () =>
+        @getPoint(1).getY()
 
-    draw: (context) ->
-        context.beginPath()
-        context.fillStyle = @color
-        context.moveTo(@getX, @getY)
-        context.lineTo(@toX, @toY)
-        context.stroke()
-        context.closePath()
+    setTo: (toX, toY) =>
+        @getPoint(1).setX(toX)
+        @getPoint(1).setY(toY)
 
 window.GObject = GObject
 window.Point = Point

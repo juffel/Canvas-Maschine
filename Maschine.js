@@ -12,7 +12,8 @@
     frameRate = 25;
 
     function Maschine(sectionID, dimX, dimY) {
-      var sect;
+      var sect,
+        _this = this;
       this.sectionID = sectionID;
       this.dimX = dimX;
       this.dimY = dimY;
@@ -28,6 +29,9 @@
       document.addEventListener('keydown', this.ev_keydown, false);
       document.addEventListener('keypress', this.ev_keypress, false);
       document.addEventListener('keyup', this.ev_keyup, false);
+      setInterval((function() {
+        return _this._refresh();
+      }), 100);
     }
 
     Maschine.prototype.ev_mouse = function(event) {};

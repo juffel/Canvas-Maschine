@@ -6,24 +6,27 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   TestMaschine = (function(_super) {
+    var pols;
 
     __extends(TestMaschine, _super);
 
-    TestMaschine.prototype.pols = [];
+    pols = [];
 
     function TestMaschine(canvasName, width, height) {
       this.ev_mouse = __bind(this.ev_mouse, this);
 
       this.ev_keydown = __bind(this.ev_keydown, this);
 
-      var i, p, points, pol, _i, _j, _len, _ref,
+      var i, p, points, pol, xValue, _i, _j, _len, _ref,
         _this = this;
       TestMaschine.__super__.constructor.call(this, canvasName, width, height);
+      this.pols = [];
       points = [];
-      points[0] = new Point(100, 100);
-      points[1] = new Point(300, 100);
-      points[2] = new Point(200, 200);
-      for (i = _i = 0; _i <= 8; i = ++_i) {
+      points[0] = new Point(0, 100);
+      points[1] = new Point(200, 100);
+      points[2] = new Point(100, 200);
+      xValue = Math.floor(window.innerWidth / 200) + 1;
+      for (i = _i = 0; 0 <= xValue ? _i <= xValue : _i >= xValue; i = 0 <= xValue ? ++_i : --_i) {
         this.pols[i] = new Polygon("#000000", points);
         points = (function() {
           var _j, _len, _results;
@@ -46,25 +49,23 @@
     }
 
     TestMaschine.prototype.shift = function() {
-      var p, pol, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
+      var i, nextPol, pol, thisPol, _i, _j, _len, _ref, _ref1, _results;
       _ref = this.pols;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         pol = _ref[_i];
-        pol.color = getRandomColor();
-        _ref1 = pol.points;
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          p = _ref1[_j];
-          p.x += 5;
-        }
-        if (pol.points[0].x > this.dimX) {
-          _ref2 = pol.points;
-          for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
-            p = _ref2[_k];
-            p.x -= this.dimX;
-          }
+        pol.move(5, 0);
+      }
+      _results = [];
+      for (i = _j = 0, _ref1 = this.pols.length - 1; 0 <= _ref1 ? _j <= _ref1 : _j >= _ref1; i = 0 <= _ref1 ? ++_j : --_j) {
+        if (this.pols[i].points[0].x > window.innerWidth) {
+          thisPol = this.pols[i];
+          nextPol = this.pols[(i + 1) % this.pols.length];
+          _results.push(thisPol.moveTo(nextPol.getX(), nextPol.getY()));
+        } else {
+          _results.push(void 0);
         }
       }
-      return this._refresh();
+      return _results;
     };
 
     TestMaschine.prototype.ev_keydown = function(event) {
