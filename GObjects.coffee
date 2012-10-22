@@ -8,6 +8,10 @@ class GObject
         @x = x
     setY: (y) =>
         @y = y
+    set: (x, y) =>
+        @setX(x)
+        @setY(y)
+
     move: (x, y) =>
         @x += x
         @y += y
@@ -55,6 +59,9 @@ class Polygon extends Shape
     getPoint: (ind) =>
         @points[ind]
 
+    getPoints: () =>
+        @points
+
     draw: (context) ->
         context.beginPath()
         context.fillStyle = @color
@@ -70,12 +77,11 @@ class Polygon extends Shape
         context.closePath()
 
 class Rectangle extends Polygon
-    constructor: (color, x, y, @dimX, @dimY) ->
-        super(color, x, y)
-
-    draw: (context) ->
-        context.fillStyle = @color
-        context.fillRect(@posX, @posY, @dimX, @dimY)
+    constructor: (color, @point, @dimX, @dimY) ->
+        super(color, [ @point,
+                       new Point(@point.getX()+@dimX, @point.getY()),
+                       new Point(@point.getX()+@dimX, @point.getY()+@dimY),
+                       new Point(@point.getX(), @point.getY()+@dimY) ] )
 
 class Line extends Polygon
     constructor: (color, p1, @p2) ->

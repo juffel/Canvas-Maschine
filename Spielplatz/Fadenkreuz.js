@@ -12,6 +12,8 @@
     function TestMaschine(canvasName, width, height) {
       this.ev_mouse = __bind(this.ev_mouse, this);
 
+      this.ev_click = __bind(this.ev_click, this);
+
       this.ev_keydown = __bind(this.ev_keydown, this);
 
       var centerX, centerY;
@@ -55,6 +57,10 @@
         this.poly.move(0, speed);
       }
       return this._refresh();
+    };
+
+    TestMaschine.prototype.ev_click = function(event) {
+      return this.poly.moveTo(event.clientX, event.clientY);
     };
 
     TestMaschine.prototype.ev_mouse = function(event) {

@@ -49,6 +49,9 @@ class TestMaschine extends Maschine
   
         @_refresh()
 
+    ev_click: (event) =>
+        @poly.moveTo(event.clientX, event.clientY)
+
     ev_mouse: (event) =>
         @l1.setTo(event.clientX, event.clientY)
         @l2.setTo(event.clientX, event.clientY)

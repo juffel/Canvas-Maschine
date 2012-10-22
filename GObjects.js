@@ -14,6 +14,8 @@
 
       this.move = __bind(this.move, this);
 
+      this.set = __bind(this.set, this);
+
       this.setY = __bind(this.setY, this);
 
       this.setX = __bind(this.setX, this);
@@ -38,6 +40,11 @@
 
     GObject.prototype.setY = function(y) {
       return this.y = y;
+    };
+
+    GObject.prototype.set = function(x, y) {
+      this.setX(x);
+      return this.setY(y);
     };
 
     GObject.prototype.move = function(x, y) {
@@ -97,6 +104,8 @@
 
     function Polygon(color, points) {
       this.points = points;
+      this.getPoints = __bind(this.getPoints, this);
+
       this.getPoint = __bind(this.getPoint, this);
 
       this.moveTo = __bind(this.moveTo, this);
@@ -165,6 +174,10 @@
       return this.points[ind];
     };
 
+    Polygon.prototype.getPoints = function() {
+      return this.points;
+    };
+
     Polygon.prototype.draw = function(context) {
       var p, _i, _len, _ref;
       context.beginPath();
@@ -192,16 +205,12 @@
 
     __extends(Rectangle, _super);
 
-    function Rectangle(color, x, y, dimX, dimY) {
+    function Rectangle(color, point, dimX, dimY) {
+      this.point = point;
       this.dimX = dimX;
       this.dimY = dimY;
-      Rectangle.__super__.constructor.call(this, color, x, y);
+      Rectangle.__super__.constructor.call(this, color, [this.point, new Point(this.point.getX() + this.dimX, this.point.getY()), new Point(this.point.getX() + this.dimX, this.point.getY() + this.dimY), new Point(this.point.getX(), this.point.getY() + this.dimY)]);
     }
-
-    Rectangle.prototype.draw = function(context) {
-      context.fillStyle = this.color;
-      return context.fillRect(this.posX, this.posY, this.dimX, this.dimY);
-    };
 
     return Rectangle;
 
