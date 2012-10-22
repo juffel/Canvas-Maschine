@@ -8,9 +8,6 @@ class Maschine
     #             V
     constructor: (@sectionID, @dimX, @dimY) ->
         @canvasName = newID()
-        @date = new Date()
-        @timeS = @date.getSeconds()
-        @timeMS = @date.getMilliseconds()
         @objects = []
         sect = document.getElementById(@sectionID)
         sect.innerHTML="<canvas id="+@canvasName+
@@ -65,26 +62,6 @@ class Maschine
         for o in @objects
             o.draw(context)
     
-    # TODO hier wird geprüft, ob bereits genug Zeit vergangen ist, um den canvas
-    # zu refreshen. Erst wird auf die Millisekunden geprüft, wenn das nicht
-    # zu einem Refresh führt, dann werden noch die vergangenen Sekunden ge-
-    # prüft.
-    _checkRefresh: () ->
-        @date = new Date()
-        curMS = @date.getMilliseconds()
-        curS = @date.getSeconds()
-        if (curMS - @timeMS) > (1000/@frameRate)
-            @_redrawCanvas()
-            @timeMS = curMS
-            @timeS = curS
-        else
-            curS = @date.getSeconds()
-            if (curS - @timeS) > 1
-                @_redrawCanvas()
-                @timeMS = curMS
-                @timeS = curS
-
-    # refresh ohne Zeitüberprüfung
     _refresh: () ->
         @_redrawCanvas()
 
