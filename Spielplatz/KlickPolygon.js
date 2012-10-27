@@ -13,10 +13,19 @@
       this.ev_click = __bind(this.ev_click, this);
       KlickPolygon.__super__.constructor.call(this, secId, window.innerWidth - 20, window.innerHeight - 20);
       this.objects.push(new Polygon("#000000", [new Point(100, 100)]));
+      this.counter = 0;
     }
 
     KlickPolygon.prototype.ev_click = function(event) {
-      return this.objects[0].points.push(new Point(event.clientX, event.clientY));
+      var x, y;
+      x = event.clientX;
+      y = event.clientY;
+      if (event.button === 0) {
+        return this.objects[this.counter].points.push(new Point(x, y));
+      } else if (event.button === 1) {
+        this.counter += 1;
+        return this.objects.push(new Polygon(getRandomColor(), [new Point(x, y)]));
+      }
     };
 
     return KlickPolygon;
