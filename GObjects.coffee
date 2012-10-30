@@ -11,7 +11,6 @@ class GObject
     set: (x, y) =>
         @setX(x)
         @setY(y)
-
     move: (x, y) =>
         @x += x
         @y += y
