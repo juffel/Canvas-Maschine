@@ -17,8 +17,6 @@ class GObject
     moveTo: (x, y) =>
         @x = x
         @y = y
-    # TODO draw: () ->
-    #   throw (new Error(...))
 
 class Point extends GObject
 
