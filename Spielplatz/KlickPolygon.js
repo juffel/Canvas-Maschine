@@ -11,9 +11,13 @@
 
     function KlickPolygon(secId) {
       this.ev_click = __bind(this.ev_click, this);
+
+      var anleitung;
       KlickPolygon.__super__.constructor.call(this, secId, window.innerWidth - 20, window.innerHeight - 20);
       this.objects.push(new Polygon("#000000", [new Point(100, 100)]));
-      this.counter = 0;
+      this.counter = 1;
+      anleitung = new TextElement(0, window.innerHeight - 20, "Mit Linksklick neue Punkte hinzufuegen, mit Mittlerer Maustaste neues Polygon beginnen");
+      this.addObject(anleitung);
     }
 
     KlickPolygon.prototype.ev_click = function(event) {

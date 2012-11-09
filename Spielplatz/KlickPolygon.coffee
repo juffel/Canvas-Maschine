@@ -3,7 +3,9 @@ class KlickPolygon extends Maschine
     constructor: (secId) ->
         super(secId, window.innerWidth-20, window.innerHeight-20)
         @objects.push new Polygon("#000000", [new Point(100, 100)])
-        @counter = 0
+        @counter = 1
+        anleitung = new TextElement(0, window.innerHeight-20, "Mit Linksklick neue Punkte hinzufuegen, mit Mittlerer Maustaste neues Polygon beginnen")
+        @addObject(anleitung)
 
     ev_click: (event) =>
         x = event.clientX

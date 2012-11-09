@@ -12,7 +12,7 @@
     function TestMaschine(canvasName, width, height) {
       this.ev_mouse = __bind(this.ev_mouse, this);
 
-      var centerX, centerY;
+      var centerX, centerY, text;
       TestMaschine.__super__.constructor.call(this, canvasName, width, height);
       centerX = Math.floor(this.dimX / 2);
       centerY = Math.floor(this.dimY / 2);
@@ -24,6 +24,8 @@
       this.addObjectShyly(this.l2);
       this.addObjectShyly(this.l3);
       this.addObject(this.l4);
+      text = new TextElement(100, 100, "AAAAAAAhhhhhhh");
+      this.addObject(text);
     }
 
     TestMaschine.prototype.ev_mouse = function(event) {

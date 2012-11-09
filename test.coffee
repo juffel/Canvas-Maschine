@@ -15,6 +15,9 @@ class TestMaschine extends Maschine
         @addObjectShyly(@l2)
         @addObjectShyly(@l3)
         @addObject(@l4)
+        
+        text = new TextElement(100, 100, "AAAAAAAhhhhhhh")
+        @addObject(text)
 
     ev_mouse: (event) =>
         @l1.toX = event.clientX
