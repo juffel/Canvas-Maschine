@@ -16,10 +16,10 @@
       TestMaschine.__super__.constructor.call(this, canvasName, width, height);
       centerX = Math.floor(this.dimX / 2);
       centerY = Math.floor(this.dimY / 2);
-      this.l1 = new Line("#000000", 0, 0, centerX, centerY);
-      this.l2 = new Line("#000000", this.dimX, 0, centerX, centerY);
-      this.l3 = new Line("#000000", this.dimX, this.dimY, centerX, centerY);
-      this.l4 = new Line("#000000", 0, this.dimY, centerX, centerY);
+      this.l1 = new Line("#000000", new Point(0, 0), new Point(centerX, centerY));
+      this.l2 = new Line("#000000", new Point(this.dimX, 0), new Point(centerX, centerY));
+      this.l3 = new Line("#000000", new Point(this.dimX, this.dimY), new Point(centerX, centerY));
+      this.l4 = new Line("#000000", new Point(0, this.dimY), new Point(centerX, centerY));
       this.addObjectShyly(this.l1);
       this.addObjectShyly(this.l2);
       this.addObjectShyly(this.l3);

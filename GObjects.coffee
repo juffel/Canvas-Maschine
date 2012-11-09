@@ -96,11 +96,33 @@ class Line extends Polygon
         @getPoint(1).setX(toX)
         @getPoint(1).setY(toY)
 
+
+class TextElement extends GObject
+        
+    constructor: (x, y, @text) ->
+        super(x, y)
+        # defaults
+        @color = "#000000"
+        @font = "italic bold 30px sans-serif"
+        @baseline = "bottom"
+        @fill = true
+
+    draw: (context) ->
+        context.fillStyle = @color
+        context.font = @font
+        context.textBaseline = @baseline
+        if(@fill)
+            context.fillText(@text, @x, @y)
+        else
+            context.strokeText(@text, @x, @y)
+
+
 window.GObject = GObject
 window.Point = Point
 window.Polygon = Polygon
 window.Rectangle = Rectangle
 window.Line = Line
+window.TextElement = TextElement
 
 # class Circle extends GObject
 #    constructor: (color, posX, posY, @radius) ->
